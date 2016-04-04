@@ -1,0 +1,16 @@
+Package: com.ccnyou.iosre
+Version: 0.0.1-1
+Architecture: iphoneos-arm
+Maintainer: ccnyou
+Installed-Size: 20
+Depends: mobilesubstrate
+Filename: debs//demo.deb
+Size: 3970
+MD5sum: 801e93475284711a11efb01433ce3269
+SHA1: 95489581c0a42b1d4d4ab6449c34fe23c01b8293
+SHA256: 2a1f59249f96e42ce98a221519c923d8399b71a7c904b44d965af8a0985611b6
+Section: Tweaks
+Description: An awesome MobileSubstrate tweak!
+Author: ccnyou
+Name: iOSRE
+

@@ -1,0 +1,9 @@
+Origin: Cydia/ccnyou
+Label: Cydia/ccnyou
+Suite: beta
+Version: 1.0
+Codename: ccnyou
+Architectures: iphoneos-arm
+Components: main
+Description: Distribution of Software for iOS
+Support: https://ccnyou.github.io/
