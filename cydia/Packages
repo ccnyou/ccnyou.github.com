@@ -4,7 +4,7 @@ Architecture: iphoneos-arm
 Maintainer: ccnyou
 Installed-Size: 20
 Depends: mobilesubstrate
-Filename: debs//com.ccnyou.iosre_0.0.1-2_iphoneos-arm.deb
+Filename: debs/com.ccnyou.iosre_0.0.1-2_iphoneos-arm.deb
 Size: 3966
 MD5sum: 630d66916efb19e4f508ce4b83448565
 SHA1: 28e3d5e1d3ce7e1514aa5313a565979bf1a5272a
