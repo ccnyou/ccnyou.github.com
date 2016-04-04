@@ -4,7 +4,7 @@ Architecture: iphoneos-arm
 Maintainer: ccnyou
 Installed-Size: 20
 Depends: mobilesubstrate
-Filename: debs//demo.deb
+Filename: debs/demo.deb
 Size: 3970
 MD5sum: 801e93475284711a11efb01433ce3269
 SHA1: 95489581c0a42b1d4d4ab6449c34fe23c01b8293
