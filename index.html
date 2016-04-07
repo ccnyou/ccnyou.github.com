@@ -3,77 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ccnyou 的个人主页 </title>
-<link rel="stylesheet" type="text/css" href="style.css?v=1.0">
+<link rel="stylesheet" type="text/css" href="css/style.css?v=1.0">
 </head>
 <body>
-<div id="container">
-	<div id="header">
-		<div class="header">
-			<div id="blog_title">
-				<h1>
-					<a href="http://ccnyou.github.io/">ccnyou 的个人博客</a>
-				</h1>
-				<h2>
-					程序设计艺术--代码手记
-				</h2>
-			</div>
-		</div>
-	</div>
-	<div id="body">
-		<div id="main">
-			<div class="main">
-				<div id="article_toplist" class="list">
-				</div>
-				<div id="article_list" class="list">
-					<div class="list_item article_item">
-						<div class="article_title">
-							<span class="ico ico_type_Original"></span>
-							<h3>
-								<span class="link_title">
-									<a href="/ccnyou/article/details/11579659">
-									解决MFC中CListCtrl（virtual）控件闪烁问题
-									</a>
-								</span>
-							</h3>
-						</div>
-						<div class="article_description">
-							文章之前，先对虚拟列表t控件做一个简单总结：
-							1,在资源中右键点击控件,找到【Owner Data】选择true
-							2,在列表控件的父窗口的类（例如对话框类）中添加 LVN_GETDISPINFO 消息，
-							或者在派生的控件类（CMyListCtrl）中映射 LVN_GETDISPINFO 消息
-							3，在消息响应函数里面写上：
-							&nbsp; &nbsp; LV_DISPINFO* pDispInfo = (LV_...        
-						</div>
-						<div class="article_manage">
-							<span class="link_postdate">2013-09-11 20:25</span>
-							<span class="link_view" title="阅读次数"><a href="/ccnyou/article/details/11579659" title="阅读次数">阅读</a>(57)</span>
-							<span class="link_comments" title="评论次数"><a href="/ccnyou/article/details/11579659#comments" title="评论次数">评论</a>(5)</span>
-							
-							<span class="link_edit"><a href="http://write.blog.csdn.net/postedit/11579659" title="编辑">编辑</a></span>
-							<span class="link_delete"><a href="javascript:void(0);" onclick="javascript:deleteArticle(11579659);return false;" title="删除">删除</a></span>
-						</div>
-						<div class="clear"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="side">
-			<div class="side">
-				<div class="panel">
-					<ul class="panel_head"><span>个人介绍</span></ul>
-					<ul class="panel_body">
-					<div style="text-align:left">姓名:陈聪宁 (<a title="访问 陈聪宁 的新浪微博" href="http://weibo.com/ccnyou">
-					<img border="0" src="http://img.my.csdn.net/uploads/201208/25/1345880111_8361.png" align="absmiddle">新浪微博</a>)
-					<br>
-					网名:ccnyou<br>
-					简介:只是一个迷途小码农<br>
-					联系 E-mail:<br>
-					<img title="欢迎讨论各类编程问题" src="http://img.my.csdn.net/uploads/201209/20/1348137385_6098.png">
-				</div>
-			</div>
-		</div>
-	</div>
+<div id="iframe">
+    <iframe src="https://github.com/ccnyou"></iframe>
 </div>
-
 </body>
 </html>
