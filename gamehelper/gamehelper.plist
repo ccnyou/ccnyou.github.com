@@ -17,9 +17,9 @@
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.ccnyou.rcserver</string>
+				<string>com.tencent.gamehelper</string>
 				<key>bundle-version</key>
-				<string>0.5.3</string>
+				<string>0.7.0</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>subtitle</key>
