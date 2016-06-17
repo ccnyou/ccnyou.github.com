@@ -1,7 +1,7 @@
 require('UIView, UIColor, UILabel')
 defineClass('ViewController', {
   // replace the -genView method
-  _testJsPatch: function() {
+  __testJsPatch: function() {
   	self.view.makeToast("JsPatchToast");
   }
 });
