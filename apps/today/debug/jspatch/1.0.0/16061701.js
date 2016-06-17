@@ -1,6 +1,5 @@
-require('UIView, UIColor, UILabel')
+require('UIView, UIView+Toast')
 defineClass('ViewController', {
-  // replace the -genView method
   __testJsPatch: function() {
   	self.view.makeToast("JsPatchToast");
   }
