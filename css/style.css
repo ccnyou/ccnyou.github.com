@@ -1,7 +1,7 @@
-body {
-    background-color:gray
-}
-
-#iframe {
-    margin:auto
+#main {
+    color:white;
+    text-align:center;
+    top:20px;
+    line-height:44px;
+    background-image:url("../images/navigation_bg.png");
 }
