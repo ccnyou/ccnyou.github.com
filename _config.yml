@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-locale                   : "zh_CN"
+locale                   : "zh"
 title                    : "ccnyou's blog"
 title_separator          : "-"
 name                     : "ccnyou"
@@ -146,7 +146,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: "\n\n"
+excerpt_separator: "<!-- more -->"
 incremental: false
 
 
