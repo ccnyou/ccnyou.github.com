@@ -1,0 +1,11 @@
+body {
+    margin:0;
+}
+
+#main {
+    color:white;
+    text-align:center;
+    top:20px;
+    line-height:44px;
+    background-image:url("../images/navigation_bg.png");
+}
