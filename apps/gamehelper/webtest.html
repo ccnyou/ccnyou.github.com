@@ -377,8 +377,14 @@
         $(".btn_10102").tap(function () {
             GameHelper.screenCapture(function (url, code) {
                 var img = document.getElementById("image");
-                var tips = document.getElementById("tips")
-                tips.innerText = "url = " + url + " code = " + code;
+                var tips = document.getElementById("tips");
+                var input = document.getElementById("input");
+                if (code == 0) {
+                    tips.innerText = "上传成功, <a href =" + url + " >点击查看</a>";
+                } else {
+                    tips.innerText = "上传失败，code = " + code;
+                }
+                
                 img.src = url;
                 input.value = url;
             });
@@ -402,8 +408,13 @@
         $(".btn_10105").tap(function () {
             GameHelper.uploadLocalPicture(function (url, code) {
                 var img = document.getElementById("image");
-                var tips = document.getElementById("tips")
-                tips.innerText = "url = " + url + " code = " + code;
+                var tips = document.getElementById("tips");
+                var input = document.getElementById("input");
+                if (code == 0) {
+                    tips.innerText = "上传成功, <a href =" + url + " >点击查看</a>";
+                } else {
+                    tips.innerText = "上传失败，code = " + code;
+                }
                 img.src = url;
                 input.value = url;
             });
