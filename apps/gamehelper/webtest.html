@@ -373,7 +373,6 @@
             GameHelper.screenCapture(function (url, code) {
                 console.log("url = " + url + " code = " + code);
                 if (code == 0) {
-                    alert("截图成功，点击查看");
                     window.location.href = url;
                 } else {
                     alert("截图失败，错误码: " + code + ">点击查看</a>");
