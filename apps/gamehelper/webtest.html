@@ -169,8 +169,12 @@
         <div style="float:left!important;max-height:10%;padding-top:5%">
            <!-- <img src="http://yoyo.qq.com/theme/head.png" style="max-width:50%;"> -->  
         </div>
-        <div style="height:15%"></div>
-
+        <div>
+            <br />
+            <span id="tips" style="color:red">提示信息</span> <br />
+            <img id="image" src="" alt="上传的图片" />
+        </div>
+     
         <div style="padding-top:10%">
             <button class="share" type="1">分享微信</button>
             <button class="share" type="2">分享朋友圈</button>
@@ -371,12 +375,10 @@
         // 屏幕截图
         $(".btn_10102").tap(function () {
             GameHelper.screenCapture(function (url, code) {
-                console.log("url = " + url + " code = " + code);
-                if (code == 0) {
-                    window.location.href = url;
-                } else {
-                    alert("截图失败，错误码: " + code + ">点击查看</a>");
-                }
+                var img = document.getElementById("image");
+                var tips = document.getElementById("tips")
+                tips.innerText = "url = " + url + " code = " + code;
+                img.src = url;
             });
         });
 
@@ -396,12 +398,10 @@
         // 照片上传
         $(".btn_10105").tap(function () {
             GameHelper.uploadLocalPicture(function (url, code) {
-                console.log("url = " + url + " code = " + code);
-                if (code == 0) {
-                    window.location.href = url;
-                } else {
-                    alert("上传失败，错误码: " + code + ">点击查看</a>");
-                }
+                var img = document.getElementById("image");
+                var tips = document.getElementById("tips")
+                tips.innerText = "url = " + url + " code = " + code;
+                img.src = url;
             });
         });
 
