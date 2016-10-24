@@ -10,7 +10,7 @@ locale                   : "zh_CN"
 title                    : "ccnyou's blog"
 title_separator          : "-"
 name                     : "ccnyou"
-description              : "An amazing website."
+description              : "ccnyou's blog"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -78,8 +78,8 @@ analytics:
 # Site Author
 author:
   name             : "ccnyou"
-  avatar           : "bio-photo.jpg"
-  bio              : "I am an amazing person."
+  avatar           : "avatar-photo.jpg"
+  bio              : "这家伙很懒O(∩_∩)O哈哈哈~."
   location         : "深圳市"
   email            :
   uri              :
