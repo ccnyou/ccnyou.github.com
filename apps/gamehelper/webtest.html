@@ -397,15 +397,12 @@
         // 照片上传
         $(".btn_10105").tap(function () {
             GameHelper.uploadLocalPicture(function (url, code) {
-                setTimeout(function () {
-                    console.log("url = " + url + " code = " + code);
-                    if (code == 0) {
-                        alert("上传成功，点击查看");
-                        window.location.href = url;
-                    } else {
-                        alert("上传失败，错误码: " + code + ">点击查看</a>");
-                    }
-                }, 1000);
+                console.log("url = " + url + " code = " + code);
+                if (code == 0) {
+                    window.location.href = url;
+                } else {
+                    alert("上传失败，错误码: " + code + ">点击查看</a>");
+                }
             });
         });
 
