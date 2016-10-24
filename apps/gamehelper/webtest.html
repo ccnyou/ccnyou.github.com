@@ -173,7 +173,7 @@
             <br />
             <span id="tips" style="color:red">提示信息</span> <br />
             <input id="input" type="text"></input> <br />
-            <img id="image" src="" alt="上传的图片" />
+            <a id="image_link" href="http://www.qq.com"><img id="image" src="" alt="上传的图片" /></a>
         </div>
      
         <div style="padding-top:10%">
@@ -378,9 +378,10 @@
             GameHelper.screenCapture(function (url, code) {
                 var img = document.getElementById("image");
                 var tips = document.getElementById("tips");
-                var input = document.getElementById("input");
+                var link = document.getElementById("image_link");
                 if (code == 0) {
-                    tips.innerText = "上传成功, <a href =" + url + " >点击查看</a>";
+                    tips.innerText = "上传成功，点击图片查看";
+                    link.href = url;
                 } else {
                     tips.innerText = "上传失败，code = " + code;
                 }
@@ -410,8 +411,10 @@
                 var img = document.getElementById("image");
                 var tips = document.getElementById("tips");
                 var input = document.getElementById("input");
+                var link = document.getElementById("image_link");
                 if (code == 0) {
-                    tips.innerText = "上传成功, <a href =" + url + " >点击查看</a>";
+                    tips.innerText = "上传成功，点击图片查看";
+                    link.href = url;
                 } else {
                     tips.innerText = "上传失败，code = " + code;
                 }
