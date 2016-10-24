@@ -172,6 +172,7 @@
         <div>
             <br />
             <span id="tips" style="color:red">提示信息</span> <br />
+            <input id="input" type="text"></input> <br />
             <img id="image" src="" alt="上传的图片" />
         </div>
      
@@ -379,6 +380,7 @@
                 var tips = document.getElementById("tips")
                 tips.innerText = "url = " + url + " code = " + code;
                 img.src = url;
+                input.value = url;
             });
         });
 
@@ -386,7 +388,8 @@
         $(".btn_10103").tap(function () {
             GameHelper.getNetworkType(function (type) {
                 console.log("type = " + type);
-                alert("当前网络是:" + type);
+                var input = document.getElementById("input")
+                input.value = "当前网络是:" + type;
             });
         });
 
@@ -402,6 +405,7 @@
                 var tips = document.getElementById("tips")
                 tips.innerText = "url = " + url + " code = " + code;
                 img.src = url;
+                input.value = url;
             });
         });
 
