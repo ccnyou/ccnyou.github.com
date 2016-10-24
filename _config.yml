@@ -79,7 +79,7 @@ analytics:
 author:
   name             : "ccnyou"
   avatar           : "avatar-photo.jpg"
-  bio              : "这家伙很懒O(∩_∩)O哈哈哈~."
+  bio              : "这家伙很懒O(∩_∩)O哈哈哈~"
   location         : "深圳市"
   email            : "ccnyou@qq.com"
   uri              :
@@ -102,7 +102,7 @@ author:
   tumblr           :
   twitter          :
   vine             :
-  weibo            :
+  weibo            : "ccnyou"
   xing             :
   youtube          :
 
