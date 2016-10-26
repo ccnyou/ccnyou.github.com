@@ -1,0 +1,2 @@
+{% comment %} 公用图片路径 {% endcomment %}
+{% capture base_image_path %}{{ site.url }}/images{{ page.id }}{% endcapture %}
