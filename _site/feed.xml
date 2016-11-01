@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2016-11-01T23:24:17+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>Sqlite 删除指定的列</title><link href="http://ccnyou.github.io/01/" rel="alternate" type="text/html" title="Sqlite 删除指定的列" /><published>2016-10-24T00:00:00+08:00</published><updated>2016-10-24T00:00:00+08:00</updated><id>http://ccnyou.github.io/01</id><content type="html" xml:base="http://ccnyou.github.io/01/">&lt;p&gt;最近由于APP数据库的升级错误，需要写修复代码，
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2016-11-02T01:24:49+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>Jekyll 配置 Pygments 语法高亮</title><link href="http://ccnyou.github.io/02/" rel="alternate" type="text/html" title="Jekyll 配置 Pygments 语法高亮" /><published>2016-11-02T00:00:00+08:00</published><updated>2016-11-02T00:00:00+08:00</updated><id>http://ccnyou.github.io/02</id><content type="html" xml:base="http://ccnyou.github.io/02/">&lt;p&gt;由于Github强制使用rouge语法高亮&lt;a href=&quot;http://gohom.win/2016/02/04/update-github-rouge/&quot;&gt;详情看这里&lt;/a&gt;，
+配置 Pygments 时候遇到了点问题，记录下。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;1. 安装&lt;/h2&gt;
+&lt;p&gt;安装可以参考这个&lt;a href=&quot;http://jerryzou.com/posts/usePygments/&quot;&gt;博客&lt;/a&gt;
+Mac 环境其实比较简单，直接敲命令就行:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;easy_install pip
+pip install pygments  &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;css&quot;&gt;2. 生成 css&lt;/h2&gt;
+&lt;p&gt;上面博客给出的css生成命令是这个：&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pygmentize -f html -a .highlight -S default &amp;gt; pygments.css&lt;/code&gt;&lt;br /&gt;
+我选了 native 配色方案，然后生成之后换上去发现背景是白色的。&lt;br /&gt;
+F12大法发现html的class是&lt;code class=&quot;highlighter-rouge&quot;&gt;figure.highlight&lt;/code&gt;，于是命令改成:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pygmentize -f html -a figure.highlight -S native &amp;gt; pygments.css&lt;/code&gt;&lt;br /&gt;
+成功覆盖css。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;3.引入&lt;/h2&gt;
+&lt;p&gt;先将生成的文件复制到路径:&lt;code class=&quot;highlighter-rouge&quot;&gt;/assets/css/pygments.css&lt;/code&gt;&lt;br /&gt;
+然后修改模板 &lt;code class=&quot;highlighter-rouge&quot;&gt;/_includes/head.html&lt;/code&gt;，在main.css的后面增加一行：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/pygments.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;更新 Jekyll，提交 Github，完成。&lt;/p&gt;
+
+&lt;p&gt;PS: 貌似 Github 的 CDN 有点慢？我提交了代码，刷新博客都是提示找不到这个css，过了好几分钟才正常。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>由于Github强制使用rouge语法高亮详情看这里，
+配置 Pygments 时候遇到了点问题，记录下。</summary></entry><entry><title>Sqlite 删除指定的列</title><link href="http://ccnyou.github.io/01/" rel="alternate" type="text/html" title="Sqlite 删除指定的列" /><published>2016-10-24T00:00:00+08:00</published><updated>2016-10-24T00:00:00+08:00</updated><id>http://ccnyou.github.io/01</id><content type="html" xml:base="http://ccnyou.github.io/01/">&lt;p&gt;最近由于APP数据库的升级错误，需要写修复代码，
 由于Sqlite并没有提供直接删除列的函数，需要自己做实现，这里简单记录下。
 &lt;!-- more --&gt;&lt;/p&gt;
 
