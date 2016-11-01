@@ -19,7 +19,7 @@
 
 
 
-<title>Hello World - ccnyou’s blog</title>
+<title>Sqlite 删除指定的列 - ccnyou’s blog</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="zh">
 <meta property="og:site_name" content="ccnyou's blog">
-<meta property="og:title" content="Hello World">
+<meta property="og:title" content="Sqlite 删除指定的列">
 
 
   <link rel="canonical" href="http://ccnyou.github.io/01/">
@@ -37,7 +37,7 @@
 
 
 
-  <meta property="og:description" content="这里是摘要">
+  <meta property="og:description" content="最近由于APP数据库的升级错误，需要写修复代码，由于Sqlite并没有提供直接删除列的函数，需要自己做实现，这里简单记录下。">
 
 
 
@@ -92,7 +92,7 @@
 
 <!-- For all browsers -->
 <link rel="stylesheet" href="http://ccnyou.github.io/assets/css/main.css">
-
+<link rel="stylesheet" href="http://ccnyou.github.io/assets/css/pygments.css">
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
 
@@ -134,16 +134,221 @@
 
   <div class="archive">
     
-      <h1 class="page__title">Hello World</h1>
+      <h1 class="page__title">Sqlite 删除指定的列</h1>
     
+    <p>最近由于APP数据库的升级错误，需要写修复代码，
+由于Sqlite并没有提供直接删除列的函数，需要自己做实现，这里简单记录下。
+<!-- more --></p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td><td class="code"><pre><span class="cm">/* 准备数据 */</span>
+<span class="k">drop</span> <span class="k">table</span> <span class="n">if</span> <span class="k">exists</span> <span class="n">YYTest</span><span class="p">;</span>
+<span class="k">drop</span> <span class="k">table</span> <span class="n">if</span> <span class="k">exists</span> <span class="n">YYTest_old</span><span class="p">;</span>
+
+<span class="cm">/* 创建测试表，test_remove是我们要删除的 */</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">YYTest</span> <span class="p">(</span><span class="n">id</span> <span class="n">int</span><span class="p">,</span> <span class="n">test_remove</span> <span class="n">int</span><span class="p">);</span>
+
+<span class="cm">/* 插入两个测试数据 */</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">YYTest</span> <span class="k">values</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">YYTest</span> <span class="k">values</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="cm">/* stpe 1，重命名旧表 */</span>
+<span class="k">alter</span> <span class="k">table</span> <span class="n">YYTest</span> <span class="k">rename</span> <span class="k">to</span> <span class="n">YYTest_old</span><span class="p">;</span>
+<span class="cm">/* stpe 2，创建新表 */</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">YYTest</span> <span class="p">(</span><span class="n">id</span> <span class="n">int</span><span class="p">);</span>
+<span class="cm">/* stpe 3，从旧表导数据到新表 */</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">YYTest</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="k">select</span> <span class="n">id</span> <span class="k">from</span> <span class="n">YYTest_old</span><span class="p">;</span>
+<span class="cm">/* stpe 4，删除旧表 */</span>
+<span class="k">drop</span> <span class="k">table</span> <span class="n">YYTest_old</span><span class="p">;</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>上面是需要一个建表语句，可以写在一个 fix.sql 里面直接执行。但是有个坏处是需要多维护一份建表脚本(stpe 2)。</p>
+
+<p>如果不想多维护这个建表脚本，可以在上层逻辑实现，而建表语句(scheme)可以通过 sqlite_master 导出。</p>
+
+<p>代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre></td><td class="code"><pre><span class="k">@implementation</span> <span class="nc">FMDatabase</span> <span class="p">(</span><span class="nl">Yoyo</span><span class="p">)</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">yoyo_schemeOfTable</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">table</span> <span class="p">{</span>
+    <span class="n">NSString</span><span class="o">*</span> <span class="n">sql</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"select sql from sqlite_master where name=?"</span><span class="p">];</span>
+    <span class="n">NSString</span><span class="o">*</span> <span class="n">scheme</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="n">FMResultSet</span><span class="o">*</span> <span class="n">rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">executeQuery</span><span class="p">:</span><span class="n">sql</span><span class="p">,</span> <span class="n">table</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">rs</span> <span class="nf">next</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="p">[</span><span class="n">rs</span> <span class="nf">stringForColumn</span><span class="p">:</span><span class="s">@"sql"</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">rs</span> <span class="nf">close</span><span class="p">];</span>
     
-<p>这里是摘要
-<!-- more -->
-这里是正文</p>
+    <span class="k">return</span> <span class="n">scheme</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>Hello World
-/images/01/image1.png</p>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">yoyo_schemeByRemoveColumns</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">columns</span> <span class="nf">scheme</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">scheme</span> <span class="p">{</span>
+    <span class="n">NSRange</span> <span class="n">beginRange</span> <span class="o">=</span> <span class="p">[</span><span class="n">scheme</span> <span class="nf">rangeOfString</span><span class="p">:</span><span class="s">@"("</span><span class="p">];</span>
+    <span class="n">NSRange</span> <span class="n">endRange</span> <span class="o">=</span> <span class="p">[</span><span class="n">scheme</span> <span class="nf">rangeOfString</span><span class="p">:</span><span class="s">@")"</span><span class="p">];</span>
+    <span class="n">NSRange</span> <span class="n">columnRange</span> <span class="o">=</span> <span class="n">NSMakeRange</span><span class="p">(</span><span class="n">beginRange</span><span class="p">.</span><span class="n">location</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">endRange</span><span class="p">.</span><span class="n">location</span> <span class="o">-</span> <span class="n">beginRange</span><span class="p">.</span><span class="n">location</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">NSString</span><span class="o">*</span> <span class="n">columnsString</span> <span class="o">=</span> <span class="p">[</span><span class="n">scheme</span> <span class="nf">substringWithRange</span><span class="p">:</span><span class="n">columnRange</span><span class="p">];</span>
+    <span class="n">NSArray</span><span class="o">*</span> <span class="n">columnComponents</span> <span class="o">=</span> <span class="p">[</span><span class="n">columnsString</span> <span class="nf">componentsSeparatedByString</span><span class="p">:</span><span class="s">@","</span><span class="p">];</span>
+    <span class="n">columnComponents</span> <span class="o">=</span> <span class="p">[</span><span class="n">columnComponents</span> <span class="nf">yoyo_copyIf</span><span class="p">:</span><span class="o">^</span><span class="n">BOOL</span><span class="p">(</span><span class="n">NSString</span><span class="o">*</span> <span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span><span class="o">*</span> <span class="n">column</span> <span class="k">in</span> <span class="n">columns</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">([</span><span class="n">element</span> <span class="nf">rangeOfString</span><span class="p">:</span><span class="n">column</span><span class="p">].</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}];</span>
+    
+    <span class="n">columnsString</span> <span class="o">=</span> <span class="p">[</span><span class="n">columnComponents</span> <span class="nf">componentsJoinedByString</span><span class="p">:</span><span class="s">@","</span><span class="p">];</span>
+    <span class="n">NSMutableString</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">scheme</span> <span class="nf">mutableCopy</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">result</span> <span class="nf">replaceCharactersInRange</span><span class="p">:</span><span class="n">columnRange</span> <span class="nf">withString</span><span class="p">:</span><span class="n">columnsString</span><span class="p">];</span>
+    
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
 
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">yoyo_removeColumns</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">columns</span> <span class="nf">table</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">table</span> <span class="p">{</span>
+    <span class="n">BOOL</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="n">NSArray</span><span class="o">*</span> <span class="n">allColumns</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">yoyo_columnsOfTable</span><span class="p">:</span><span class="n">table</span><span class="p">];</span>
+    <span class="n">NSArray</span><span class="o">*</span> <span class="n">removedColumns</span> <span class="o">=</span> <span class="p">[</span><span class="n">allColumns</span> <span class="nf">yoyo_arrayByRemoveElements</span><span class="p">:</span><span class="n">columns</span><span class="p">];</span>
+    
+    <span class="c1">// 1. dump 出表的 scheme
+</span>    <span class="n">NSString</span><span class="o">*</span> <span class="n">tableScheme</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">yoyo_schemeOfTable</span><span class="p">:</span><span class="n">table</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tableScheme</span><span class="p">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 2. 删除对应列的语句
+</span>    <span class="n">tableScheme</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">yoyo_schemeByRemoveColumns</span><span class="p">:</span><span class="n">columns</span> <span class="nf">scheme</span><span class="p">:</span><span class="n">tableScheme</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tableScheme</span><span class="p">.</span><span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 3. 改名成 table_old
+</span>    <span class="n">NSString</span><span class="o">*</span> <span class="n">sql</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"alter table %@ rename to %@_old;"</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">table</span><span class="p">];</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">executeUpdate</span><span class="p">:</span><span class="n">sql</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 4. 创建新表
+</span>    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">executeUpdate</span><span class="p">:</span><span class="n">tableScheme</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 6. 将旧表数据导回去
+</span>    <span class="n">NSString</span><span class="o">*</span> <span class="n">columnsString</span> <span class="o">=</span> <span class="p">[</span><span class="n">removedColumns</span> <span class="nf">componentsJoinedByString</span><span class="p">:</span><span class="s">@","</span><span class="p">];</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"insert into %@(%@) select %@ from %@_old;"</span><span class="p">,</span>
+           <span class="n">table</span><span class="p">,</span> <span class="n">columnsString</span><span class="p">,</span> <span class="n">columnsString</span><span class="p">,</span> <span class="n">table</span><span class="p">];</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">executeUpdate</span><span class="p">:</span><span class="n">sql</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"drop table %@_old;"</span><span class="p">,</span> <span class="n">table</span><span class="p">];</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">executeUpdate</span><span class="p">:</span><span class="n">sql</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
   </div>
 </div>
