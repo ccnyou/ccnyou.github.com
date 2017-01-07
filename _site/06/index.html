@@ -19,7 +19,7 @@
 
 
 
-<title>【翻译】Objective-C开发中，单元测试的价值是什么？ - ccnyou’s blog</title>
+<title>【翻译】Objective-C开发中，哪些模块值得写单元测试？ - ccnyou’s blog</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="zh">
 <meta property="og:site_name" content="ccnyou's blog">
-<meta property="og:title" content="【翻译】Objective-C开发中，单元测试的价值是什么？">
+<meta property="og:title" content="【翻译】Objective-C开发中，哪些模块值得写单元测试？">
 
 
   <link rel="canonical" href="http://ccnyou.github.io/06/">
@@ -37,7 +37,7 @@
 
 
 
-  <meta property="og:description" content="原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com什么单元测试值得做？这是一个值得讨论的问题。写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。">
+  <meta property="og:description" content="原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/  按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com哪些模块值得写单元测试？这是一个值得讨论的问题。写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。">
 
 
 
@@ -134,16 +134,16 @@
 
   <div class="post">
     
-      <h1 class="page__title">【翻译】Objective-C开发中，单元测试的价值是什么？</h1>
+      <h1 class="page__title">【翻译】Objective-C开发中，哪些模块值得写单元测试？</h1>
     
     
-<p>原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/
-按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com</p>
+<p>原文：<a href="https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/">https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/</a>  <br />
+按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com</p>
 
-<p>什么单元测试值得做？这是一个值得讨论的问题。</p>
+<p>哪些模块值得写单元测试？这是一个值得讨论的问题。</p>
 
 <p>写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
-有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。</p>
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。</p>
 
 <!-- more -->
 
@@ -161,7 +161,7 @@
 他后面解释说，不管你用什么机制来确保不发布bug出去都是可以的，只要你有了其中一种。例如单元测试，UI自动测试，手工测试，都是合适的。
 不过，手工测试要花费很多的时间，单元测试和UI自动测试都是非常快的。</p>
 
-<p>所有这些问题都围绕一个主题：Objective-C开发中，单元测试的价值是什么？我们考虑一个架构设计得很好的app，它可以分成三部分：View，Model，Controller。</p>
+<p>所有这些问题都围绕一个主题：Objective-C开发中，哪些模块值得写单元测试？我们考虑一个架构设计得很好的app，它可以分成三部分：View，Model，Controller。</p>
 
 <p><img src="/images/06/1.png" alt="MVC" /></p>
 

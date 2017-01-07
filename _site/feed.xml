@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-08T00:44:28+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】Objective-C开发中，单元测试的价值是什么？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，单元测试的价值是什么？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/
-按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-08T00:52:19+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】Objective-C开发中，哪些模块值得写单元测试？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：&lt;a href=&quot;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&quot;&gt;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&lt;/a&gt;  &lt;br /&gt;
+按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com&lt;/p&gt;
 
-&lt;p&gt;什么单元测试值得做？这是一个值得讨论的问题。&lt;/p&gt;
+&lt;p&gt;哪些模块值得写单元测试？这是一个值得讨论的问题。&lt;/p&gt;
 
 &lt;p&gt;写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
-有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。&lt;/p&gt;
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
@@ -22,7 +22,7 @@
 他后面解释说，不管你用什么机制来确保不发布bug出去都是可以的，只要你有了其中一种。例如单元测试，UI自动测试，手工测试，都是合适的。
 不过，手工测试要花费很多的时间，单元测试和UI自动测试都是非常快的。&lt;/p&gt;
 
-&lt;p&gt;所有这些问题都围绕一个主题：Objective-C开发中，单元测试的价值是什么？我们考虑一个架构设计得很好的app，它可以分成三部分：View，Model，Controller。&lt;/p&gt;
+&lt;p&gt;所有这些问题都围绕一个主题：Objective-C开发中，哪些模块值得写单元测试？我们考虑一个架构设计得很好的app，它可以分成三部分：View，Model，Controller。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/06/1.png&quot; alt=&quot;MVC&quot; /&gt;&lt;/p&gt;
 
@@ -37,13 +37,13 @@
 但是，这些Model会被别的地方创建和修改，所以请务必要测试这些代码。&lt;/p&gt;
 
 &lt;p&gt;所以总结一下就是，用单元测试来测试Model和网络交互部分。如果有时间的话，用UI自动测试来测试其他的部分。或许手工测试UI交互部分更适合你的工作流，
-特别是一些小型App。最后，用文档记录下单元测试和UI自动测试都没有覆盖的部分，这样你才能在发布前手工测试这部分。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/
-按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com
+特别是一些小型App。最后，用文档记录下单元测试和UI自动测试都没有覆盖的部分，这样你才能在发布前手工测试这部分。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/  
+按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com
 
-什么单元测试值得做？这是一个值得讨论的问题。
+哪些模块值得写单元测试？这是一个值得讨论的问题。
 
 写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
-有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。</summary></entry><entry><title>Sqlite 删除逻辑上的重复记录</title><link href="http://ccnyou.github.io/05/" rel="alternate" type="text/html" title="Sqlite 删除逻辑上的重复记录" /><published>2017-01-04T00:00:00+08:00</published><updated>2017-01-04T00:00:00+08:00</updated><id>http://ccnyou.github.io/05</id><content type="html" xml:base="http://ccnyou.github.io/05/">&lt;p&gt;有个会话的表没有加唯一约束，导致在某些情况下会出现数据重复的情况，直接在升级脚本加约束会有可能失败，
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。</summary></entry><entry><title>Sqlite 删除逻辑上的重复记录</title><link href="http://ccnyou.github.io/05/" rel="alternate" type="text/html" title="Sqlite 删除逻辑上的重复记录" /><published>2017-01-04T00:00:00+08:00</published><updated>2017-01-04T00:00:00+08:00</updated><id>http://ccnyou.github.io/05</id><content type="html" xml:base="http://ccnyou.github.io/05/">&lt;p&gt;有个会话的表没有加唯一约束，导致在某些情况下会出现数据重复的情况，直接在升级脚本加约束会有可能失败，
 所以需要在升级脚本删掉逻辑上面重复的记录，同时要保留第一条记录，然后再增加唯一约束。&lt;/p&gt;
 
 &lt;!-- more --&gt;
