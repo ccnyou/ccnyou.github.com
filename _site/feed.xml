@@ -1,4 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2016-12-08T22:54:31+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本</title><link href="http://ccnyou.github.io/03/" rel="alternate" type="text/html" title="Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本" /><published>2016-11-15T00:00:00+08:00</published><updated>2016-11-15T00:00:00+08:00</updated><id>http://ccnyou.github.io/03</id><content type="html" xml:base="http://ccnyou.github.io/03/">&lt;p&gt;&lt;img src=&quot;/images/03/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-08T00:44:28+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】Objective-C开发中，单元测试的价值是什么？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，单元测试的价值是什么？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/
+按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com&lt;/p&gt;
+
+&lt;p&gt;什么单元测试值得做？这是一个值得讨论的问题。&lt;/p&gt;
+
+&lt;p&gt;写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;单元测试的主要目的是两点，第一点，在我看来是比较重要的，就是保证你的类写得比较小和高内聚。第二点就是用来自动
+测试了(废话)。这些其实非常有用，后面我会解释怎么个有用。&lt;/p&gt;
+
+&lt;p&gt;例如你写了一个类，从一些网络API获取数据，在开发过程做会对这些行为作一些假设，然后代码会依赖于这些假设。
+然后过了几个月之后，你忘了这些假设，然后改了这部分的代码，破坏了这些依赖，但是你不会意识到这些，直到发布之后出了问题。&lt;/p&gt;
+
+&lt;p&gt;总的来说单元测试就是将那些你应该手动测试的工作自动化，这并不是说你需要对整个app覆盖单元测试。你需要在发布前按照一些方案测试App，
+为什么这些都要手工来测试呢？&lt;/p&gt;
+
+&lt;p&gt;Matt Gemmell(APIs design for iOS 的作者)曾经写道，“你发布app不会遇到任何bug”
+(thou shalt suffer no bugs to ship. thou = you, shalt = shall, 原文可以参考：http://www.itdadao.com/articles/c15a539631p0.html)，
+他后面解释说，不管你用什么机制来确保不发布bug出去都是可以的，只要你有了其中一种。例如单元测试，UI自动测试，手工测试，都是合适的。
+不过，手工测试要花费很多的时间，单元测试和UI自动测试都是非常快的。&lt;/p&gt;
+
+&lt;p&gt;所有这些问题都围绕一个主题：Objective-C开发中，单元测试的价值是什么？我们考虑一个架构设计得很好的app，它可以分成三部分：View，Model，Controller。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/06/1.png&quot; alt=&quot;MVC&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我说是三个部分么？我的意思是三……种。在需要依赖后台API接口的App上面，你会写一些网络的代码。有时候这些代码会从Model里面分离，有时候这些代码会包含在Model
+里面。在可以避免的前提下，这些代码不应该写在View或者Controller里面（一般都可以避免）。&lt;/p&gt;
+
+&lt;p&gt;Controller 和 View 的交互没办法完全用单元测试完成，UI自动测试的介入可以节省你的一些时间。不过这篇文章是讨论单元测试的，哪里才是它的用武之地呢？&lt;/p&gt;
+
+&lt;p&gt;上面橙色框部分说明了哪里用单元测试最有力：Model和网络交互部分。&lt;/p&gt;
+
+&lt;p&gt;在第一次写网络代码的时候，你可以轻松地写测试代码来验证你的假设。如果你的Model很小，你可能写完就直接干其他事了，根本不会觉得需要去测它。
+但是，这些Model会被别的地方创建和修改，所以请务必要测试这些代码。&lt;/p&gt;
+
+&lt;p&gt;所以总结一下就是，用单元测试来测试Model和网络交互部分。如果有时间的话，用UI自动测试来测试其他的部分。或许手工测试UI交互部分更适合你的工作流，
+特别是一些小型App。最后，用文档记录下单元测试和UI自动测试都没有覆盖的部分，这样你才能在发布前手工测试这部分。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/
+按心情和个人理解翻译，读起来有不通顺可以给我留意见: ccnyou@qq.com
+
+什么单元测试值得做？这是一个值得讨论的问题。
+
+写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。那么我们来讨论一下应该怎么决定测试的方案。</summary></entry><entry><title>Sqlite 删除逻辑上的重复记录</title><link href="http://ccnyou.github.io/05/" rel="alternate" type="text/html" title="Sqlite 删除逻辑上的重复记录" /><published>2017-01-04T00:00:00+08:00</published><updated>2017-01-04T00:00:00+08:00</updated><id>http://ccnyou.github.io/05</id><content type="html" xml:base="http://ccnyou.github.io/05/">&lt;p&gt;有个会话的表没有加唯一约束，导致在某些情况下会出现数据重复的情况，直接在升级脚本加约束会有可能失败，
+所以需要在升级脚本删掉逻辑上面重复的记录，同时要保留第一条记录，然后再增加唯一约束。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;先看表结构，一些无关的字段已经删除。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;TABLE&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;YYSession&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sessionId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INTEGER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;PRIMARY&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;KEY&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AUTOINCREMENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sessionTitle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;会话标题&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;发送角色&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INTEGER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;会话类型，如单聊，群聊&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CHAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;对方的&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，如角色&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，群&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;从 google 搜索了一下，参考一些搜索结果，应该是这么写：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;having&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rowid&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rowid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;having&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;实际测试发现 Sqlite 不支持delete时候多个in查询，后面改成了这样：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;table style=&quot;border-spacing: 0&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot; style=&quot;text-align: right&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;-&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;-&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;      
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;-&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;-&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;having&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rowid&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rowid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;YYSession&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;roleId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sessionType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;having&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;测试成功。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>有个会话的表没有加唯一约束，导致在某些情况下会出现数据重复的情况，直接在升级脚本加约束会有可能失败，
+所以需要在升级脚本删掉逻辑上面重复的记录，同时要保留第一条记录，然后再增加唯一约束。</summary></entry><entry><title>一次 “卡顿” 的优化</title><link href="http://ccnyou.github.io/04/" rel="alternate" type="text/html" title="一次 “卡顿” 的优化" /><published>2016-12-20T00:00:00+08:00</published><updated>2016-12-20T00:00:00+08:00</updated><id>http://ccnyou.github.io/04</id><content type="html" xml:base="http://ccnyou.github.io/04/">&lt;p&gt;最近因为有赛事，用户量一下子暴涨，然后 crash 率也暴涨，同时还有大量用户反馈卡顿，花了大量时间进行定位和优化，这里做一下总结。&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;离开 Prifile 谈优化都是耍流氓。首先是从卡顿入手，在用Time Profiler圈出卡顿时段，点开主线程发现只有系统的函数。 
+然后怀疑到内存问题，要么是泄漏要么是占用过高。然后挂起了 Allocations 测试内存。跑了接近20分钟，看图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/04/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可以看到 CFString 占用非常高，点开发现是 FMDB 用的，并且没有泄漏。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/04/2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;那就肯定是没有触发释放时机了。为啥呢？这个要从 mrc 年代说起。当年的引用计数是手动管理的，我们自己调用了一次 alloc，
+(或者名字带有 alloc 的方法)，就需要自己调用一次 release，而这种 &lt;code class=&quot;highlighter-rouge&quot;&gt;stringWithFormat:&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;lowercaseStringWithLocale:&lt;/code&gt;
+这种方法是在库函数里面分配的，不需要主动调 release，实际上它的分配是这样的：[[[NSString alloc] init] autorelease]
+然后 autorelease 会在 autorelease pool 释放的时候一起释放。每一个线程都会有一个 autorelease pool，我们是在
+一个测试的死循环线程里面处理的消息，这个线程是没有机会被释放的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/04/3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;结论就是，在被测试方法增加一个 @autoreleasepool，然后再定位新的问题。
+待续。。。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>最近因为有赛事，用户量一下子暴涨，然后 crash 率也暴涨，同时还有大量用户反馈卡顿，花了大量时间进行定位和优化，这里做一下总结。</summary></entry><entry><title>Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本</title><link href="http://ccnyou.github.io/03/" rel="alternate" type="text/html" title="Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本" /><published>2016-11-15T00:00:00+08:00</published><updated>2016-11-15T00:00:00+08:00</updated><id>http://ccnyou.github.io/03</id><content type="html" xml:base="http://ccnyou.github.io/03/">&lt;p&gt;&lt;img src=&quot;/images/03/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;升级Xcode后会批量出现这种警告，Xcode 7.x之前版本没有提示。事实上也应该是要调 &lt;code class=&quot;highlighter-rouge&quot;&gt;[super awakeFromNib]&lt;/code&gt; 的。
 于是写了个脚本批量替换：&lt;/p&gt;
