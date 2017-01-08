@@ -37,7 +37,7 @@
 
 
 
-  <meta property="og:description" content="原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/  按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com哪些模块值得写单元测试？这是一个值得讨论的问题。写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。">
+  <meta property="og:description" content="原文：https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/  按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com哪些模块值得写单元测试？这是一个值得讨论的问题。写后台的同学可能会mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致。你是否需要测得这么细？有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么选择测试的策略。">
 
 
 
@@ -138,26 +138,27 @@
     
     
 <p>原文：<a href="https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/">https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/</a>  <br />
-按个人理解翻译，读起来有不通顺可以通过邮箱给我留意见: ccnyou@qq.com</p>
+按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com</p>
 
 <p>哪些模块值得写单元测试？这是一个值得讨论的问题。</p>
 
-<p>写后台的同学mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致，你是否需要测得这么细致？
-有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么决定测试的方案。</p>
+<p>写后台的同学可能会mock整个数据库，仅仅是为了测试SQL语句是不是跟预期的”Hello, World”一致。你是否需要测得这么细？
+有可能不需要。那么你是否需要测试iOS App的每一行代码？绝对不需要。我们来讨论一下应该怎么选择测试的策略。</p>
 
 <!-- more -->
 
-<p>单元测试的主要目的是两点，第一点，在我看来是比较重要的，就是保证你的类写得比较小和高内聚。第二点就是用来自动
-测试了(废话)。这些其实非常有用，后面我会解释怎么个有用。</p>
+<p>单元测试的主要目的是两点，第一点，在我看来是比较重要的，就是保证你的类写得比较小和高内聚。第二点就是用来自动测试了(废话)。
+这些其实非常有用，后面我会解释这是什么意思。</p>
 
 <p>例如你写了一个类，从一些网络API获取数据，在开发过程做会对这些行为作一些假设，然后代码会依赖于这些假设。
-然后过了几个月之后，你忘了这些假设，然后改了这部分的代码，破坏了这些依赖，但是你不会意识到这些，直到发布之后出了问题。</p>
+然后过了几个月之后，你忘了这些假设，然后改了这部分的代码，破坏了这些依赖，直到发布之后出了问题，你才意识到好像日了某种动物。</p>
 
-<p>总的来说单元测试就是将那些你应该手动测试的工作自动化，这并不是说你需要对整个app覆盖单元测试。你需要在发布前按照一些方案测试App，
-为什么这些都要手工来测试呢？</p>
+<p>总的来说单元测试就是将那些你应该手动测试的工作自动化。这并不是说你需要对整个app覆盖单元测试，但是你应该在发布前完整测试一遍App。
+为什么所有测试都要手工来完成呢？</p>
 
-<p>Matt Gemmell(APIs design for iOS 的作者)曾经写道，“你发布app不会遇到任何bug”
-(thou shalt suffer no bugs to ship. thou = you, shalt = shall, 原文可以参考：http://www.itdadao.com/articles/c15a539631p0.html)，
+<p>Matt Gemmell(《APIs design for iOS》 的作者)曾经写道，“你发布app不会遇到任何bug”
+(thou shalt suffer no bugs to ship. thou = you, shalt = shall, 原文可以参考：
+<a href="ttp://www.itdadao.com/articles/c15a539631p0.html">http://www.itdadao.com/articles/c15a539631p0.html</a>)，
 他后面解释说，不管你用什么机制来确保不发布bug出去都是可以的，只要你有了其中一种。例如单元测试，UI自动测试，手工测试，都是合适的。
 不过，手工测试要花费很多的时间，单元测试和UI自动测试都是非常快的。</p>
 
@@ -166,19 +167,37 @@
 <p><img src="/images/06/1.png" alt="MVC" /></p>
 
 <p>我说是三个部分么？我的意思是三……种。在需要依赖后台API接口的App上面，你会写一些网络的代码。有时候这些代码会从Model里面分离，有时候这些代码会包含在Model
-里面。在可以避免的前提下，这些代码不应该写在View或者Controller里面（一般都可以避免）。</p>
+里面。可以避免的话，网络交互代码不应该写在View或者Controller里面（一般都可以）。</p>
 
-<p>Controller 和 View 的交互没办法完全用单元测试完成，UI自动测试的介入可以节省你的一些时间。不过这篇文章是讨论单元测试的，哪里才是它的用武之地呢？</p>
+<p>Controller 和 View 的交互没办法完全用单元测试完成，UI自动测试的介入可以节省你的一些时间。这篇文章是讨论单元测试的啊啊啊我日！哪里才是单元测试的用武之地啊？</p>
 
-<p>上面橙色框部分说明了哪里用单元测试最有力：Model和网络交互部分。</p>
+<p>其实上面橙色框部分回答了这个问题：Model和网络交互部分。</p>
 
 <p>在第一次写网络代码的时候，你可以轻松地写测试代码来验证你的假设。如果你的Model很小，你可能写完就直接干其他事了，根本不会觉得需要去测它。
-但是，这些Model会被别的地方创建和修改，所以请务必要测试这些代码。</p>
+但是，这些Model会被别的地方创建和修改，(其实还会被同事添加特性和修改实现)，所以请务必要测试这些代码。</p>
 
-<p>所以总结一下就是，用单元测试来测试Model和网络交互部分。如果有时间的话，用UI自动测试来测试其他的部分。或许手工测试UI交互部分更适合你的工作流，
+<p>所以总结一下就是，用单元测试来测试Model和网络交互部分。如果有时间的话，用UI自动测试来测试其他的部分。或许手工测试UI交互部分更适合你的工作方式，
 特别是一些小型App。最后，用文档记录下单元测试和UI自动测试都没有覆盖的部分，这样你才能在发布前手工测试这部分。</p>
 
   </div>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/06" data-title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" data-url="/06/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"ccnyou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
 </div>
 
     <div class="page__footer">
