@@ -1,0 +1,230 @@
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>【翻译】编写可测试代码的艺术 - ccnyou’s blog</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="ccnyou's blog">
+<meta property="og:title" content="【翻译】编写可测试代码的艺术">
+
+
+  <link rel="canonical" href="http://ccnyou.github.io/07/">
+  <meta property="og:url" content="http://ccnyou.github.io/07/">
+
+
+
+  <meta property="og:description" content="原文：http://misko.hevery.com/code-reviewers-guide/  按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com还在持续翻译中，先发整体框架上来…缺陷一：构造函数做太多工作### 警告标志：* 构造函数中或者在字段声明处出现 new 关键字。* 构造函数中或者在字段声明处出现静态函数调用。* 在构造函数中做任何字段赋值的事情。* 在构造函数之后对象没有完全初始化(注意initialize方法)。* 在构造函数中出现控制流(条件、循环逻辑)。* 用代码做复杂的对象图构造而不是工厂模式或者构造器。* 添加或者使用初始化块。缺陷二：挖掘合作者### 警告标志： * 对象被传递进去但是不直接使用(只是为了用来访问其他对象)* 违反Demeter法则：方法调用链用点（.）来遍历对象图。* 可疑的命名：context, environment, principal, container, manager。缺陷三：脆弱的全局状态和单例### 警告标志： * 添加或者使用单例。* 添加或者使用静态字段或者静态函数。* 添加或者使用静态初始化块。* 添加或者使用注册机制。* 添加或者使用服务定位器。缺陷四：类做太多事情### 警告标志： * 类功能总结起来包含“和”字。* 类很难让团队新成员阅读快速理解。* 类包含部分字段只在部分方法中用到。* 类包含只操作参数的静态方法">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2017-01-11T00:00:00+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "ccnyou",
+      "url" : "http://ccnyou.github.io",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://ccnyou.github.io/feed.xml" type="application/atom+xml" rel="alternate" title="ccnyou's blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://ccnyou.github.io/assets/css/main.css">
+<link rel="stylesheet" href="http://ccnyou.github.io/assets/css/pygments.css">
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--post">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://ccnyou.github.io/">ccnyou's blog</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <div class="post">
+    
+      <h1 class="page__title">【翻译】编写可测试代码的艺术</h1>
+    
+    
+<p>原文：<a href="http://misko.hevery.com/code-reviewers-guide/">http://misko.hevery.com/code-reviewers-guide/</a>  <br />
+按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com
+还在持续翻译中，先发整体框架上来…</p>
+
+<h2 id="section">缺陷一：构造函数做太多工作</h2>
+<p>### 警告标志：<br />
+* 构造函数中或者在字段声明处出现 <code class="highlighter-rouge">new</code> 关键字。
+* 构造函数中或者在字段声明处出现静态函数调用。
+* 在构造函数中做任何字段赋值的事情。
+* 在构造函数之后对象没有完全初始化(注意<code class="highlighter-rouge">initialize</code>方法)。
+* 在构造函数中出现控制流(条件、循环逻辑)。
+* 用代码做复杂的对象图构造而不是工厂模式或者构造器。
+* 添加或者使用初始化块。</p>
+
+<h2 id="section-1">缺陷二：挖掘合作者</h2>
+<p>### 警告标志： 
+* 对象被传递进去但是不直接使用(只是为了用来访问其他对象)
+* 违反Demeter法则：方法调用链用点（.）来遍历对象图。
+* 可疑的命名：<code class="highlighter-rouge">context, environment, principal, container, manager</code>。</p>
+
+<h2 id="section-2">缺陷三：脆弱的全局状态和单例</h2>
+<p>### 警告标志： 
+* 添加或者使用单例。
+* 添加或者使用静态字段或者静态函数。
+* 添加或者使用静态初始化块。
+* 添加或者使用注册机制。
+* 添加或者使用服务定位器。</p>
+
+<h2 id="section-3">缺陷四：类做太多事情</h2>
+<p>### 警告标志： 
+* 类功能总结起来包含“和”字。
+* 类很难让团队新成员阅读快速理解。
+* 类包含部分字段只在部分方法中用到。
+* 类包含只操作参数的静态方法</p>
+
+
+  </div>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/07" data-title="【翻译】编写可测试代码的艺术" data-url="/07/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"ccnyou"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/ccnyou"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://ccnyou.github.io/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 ccnyou. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="http://ccnyou.github.io/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>

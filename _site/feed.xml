@@ -1,4 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-08T16:11:05+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】Objective-C开发中，哪些模块值得写单元测试？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：&lt;a href=&quot;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&quot;&gt;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&lt;/a&gt;  &lt;br /&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-11T15:06:17+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】编写可测试代码的艺术</title><link href="http://ccnyou.github.io/07/" rel="alternate" type="text/html" title="【翻译】编写可测试代码的艺术" /><published>2017-01-11T00:00:00+08:00</published><updated>2017-01-11T00:00:00+08:00</updated><id>http://ccnyou.github.io/07</id><content type="html" xml:base="http://ccnyou.github.io/07/">&lt;p&gt;原文：&lt;a href=&quot;http://misko.hevery.com/code-reviewers-guide/&quot;&gt;http://misko.hevery.com/code-reviewers-guide/&lt;/a&gt;  &lt;br /&gt;
+按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com
+还在持续翻译中，先发整体框架上来…&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;缺陷一：构造函数做太多工作&lt;/h2&gt;
+&lt;p&gt;### 警告标志：&lt;br /&gt;
+* 构造函数中或者在字段声明处出现 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 关键字。
+* 构造函数中或者在字段声明处出现静态函数调用。
+* 在构造函数中做任何字段赋值的事情。
+* 在构造函数之后对象没有完全初始化(注意&lt;code class=&quot;highlighter-rouge&quot;&gt;initialize&lt;/code&gt;方法)。
+* 在构造函数中出现控制流(条件、循环逻辑)。
+* 用代码做复杂的对象图构造而不是工厂模式或者构造器。
+* 添加或者使用初始化块。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;缺陷二：挖掘合作者&lt;/h2&gt;
+&lt;p&gt;### 警告标志： 
+* 对象被传递进去但是不直接使用(只是为了用来访问其他对象)
+* 违反Demeter法则：方法调用链用点（.）来遍历对象图。
+* 可疑的命名：&lt;code class=&quot;highlighter-rouge&quot;&gt;context, environment, principal, container, manager&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;缺陷三：脆弱的全局状态和单例&lt;/h2&gt;
+&lt;p&gt;### 警告标志： 
+* 添加或者使用单例。
+* 添加或者使用静态字段或者静态函数。
+* 添加或者使用静态初始化块。
+* 添加或者使用注册机制。
+* 添加或者使用服务定位器。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;缺陷四：类做太多事情&lt;/h2&gt;
+&lt;p&gt;### 警告标志： 
+* 类功能总结起来包含“和”字。
+* 类很难让团队新成员阅读快速理解。
+* 类包含部分字段只在部分方法中用到。
+* 类包含只操作参数的静态方法&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：http://misko.hevery.com/code-reviewers-guide/  
+按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com
+还在持续翻译中，先发整体框架上来…
+
+缺陷一：构造函数做太多工作
+### 警告标志：
+* 构造函数中或者在字段声明处出现 new 关键字。
+* 构造函数中或者在字段声明处出现静态函数调用。
+* 在构造函数中做任何字段赋值的事情。
+* 在构造函数之后对象没有完全初始化(注意initialize方法)。
+* 在构造函数中出现控制流(条件、循环逻辑)。
+* 用代码做复杂的对象图构造而不是工厂模式或者构造器。
+* 添加或者使用初始化块。
+
+缺陷二：挖掘合作者
+### 警告标志： 
+* 对象被传递进去但是不直接使用(只是为了用来访问其他对象)
+* 违反Demeter法则：方法调用链用点（.）来遍历对象图。
+* 可疑的命名：context, environment, principal, container, manager。
+
+缺陷三：脆弱的全局状态和单例
+### 警告标志： 
+* 添加或者使用单例。
+* 添加或者使用静态字段或者静态函数。
+* 添加或者使用静态初始化块。
+* 添加或者使用注册机制。
+* 添加或者使用服务定位器。
+
+缺陷四：类做太多事情
+### 警告标志： 
+* 类功能总结起来包含“和”字。
+* 类很难让团队新成员阅读快速理解。
+* 类包含部分字段只在部分方法中用到。
+* 类包含只操作参数的静态方法</summary></entry><entry><title>【翻译】Objective-C开发中，哪些模块值得写单元测试？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：&lt;a href=&quot;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&quot;&gt;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&lt;/a&gt;  &lt;br /&gt;
 按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com&lt;/p&gt;
 
 &lt;p&gt;哪些模块值得写单元测试？这是一个值得讨论的问题。&lt;/p&gt;
@@ -101,7 +167,7 @@
 
 &lt;!-- more --&gt;
 
-&lt;p&gt;离开 Prifile 谈优化都是耍流氓。首先是从卡顿入手，在用Time Profiler圈出卡顿时段，点开主线程发现只有系统的函数。 
+&lt;p&gt;离开 Profile 谈优化都是耍流氓。首先是从卡顿入手，在用Time Profiler圈出卡顿时段，点开主线程发现只有系统的函数。 
 然后怀疑到内存问题，要么是泄漏要么是占用过高。然后挂起了 Allocations 测试内存。跑了接近20分钟，看图：&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/04/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -119,7 +185,12 @@
 &lt;p&gt;&lt;img src=&quot;/images/04/3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;结论就是，在被测试方法增加一个 @autoreleasepool，然后再定位新的问题。
-待续。。。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>最近因为有赛事，用户量一下子暴涨，然后 crash 率也暴涨，同时还有大量用户反馈卡顿，花了大量时间进行定位和优化，这里做一下总结。</summary></entry><entry><title>Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本</title><link href="http://ccnyou.github.io/03/" rel="alternate" type="text/html" title="Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本" /><published>2016-11-15T00:00:00+08:00</published><updated>2016-11-15T00:00:00+08:00</updated><id>http://ccnyou.github.io/03</id><content type="html" xml:base="http://ccnyou.github.io/03/">&lt;p&gt;&lt;img src=&quot;/images/03/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+待续。。。&lt;/p&gt;
+
+&lt;p&gt;— 更新 —&lt;/p&gt;
+
+&lt;p&gt;后面定位内存问题，处理了部分自己的内存泄漏，大多数是block使用不当，还有部分是第三方组件，例如云通信自己的，随着使用时间增长，
+发现他们内部占用内存也会越来越高，怀疑是占用的内存没来得及释放，已经给他们反馈。别的SDK也有部分泄漏能更新的更新了处理，不能更新的自己改掉。&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>最近因为有赛事，用户量一下子暴涨，然后 crash 率也暴涨，同时还有大量用户反馈卡顿，花了大量时间进行定位和优化，这里做一下总结。</summary></entry><entry><title>Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本</title><link href="http://ccnyou.github.io/03/" rel="alternate" type="text/html" title="Xcode 7.x 升级 8.x awakeFromNib 警告处理脚本" /><published>2016-11-15T00:00:00+08:00</published><updated>2016-11-15T00:00:00+08:00</updated><id>http://ccnyou.github.io/03</id><content type="html" xml:base="http://ccnyou.github.io/03/">&lt;p&gt;&lt;img src=&quot;/images/03/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;升级Xcode后会批量出现这种警告，Xcode 7.x之前版本没有提示。事实上也应该是要调 &lt;code class=&quot;highlighter-rouge&quot;&gt;[super awakeFromNib]&lt;/code&gt; 的。
 于是写了个脚本批量替换：&lt;/p&gt;
