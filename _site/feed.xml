@@ -1,70 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-11T22:28:24+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】编写可测试代码的艺术</title><link href="http://ccnyou.github.io/07/" rel="alternate" type="text/html" title="【翻译】编写可测试代码的艺术" /><published>2017-01-11T00:00:00+08:00</published><updated>2017-01-11T00:00:00+08:00</updated><id>http://ccnyou.github.io/07</id><content type="html" xml:base="http://ccnyou.github.io/07/">&lt;p&gt;原文：&lt;a href=&quot;http://misko.hevery.com/code-reviewers-guide/&quot;&gt;http://misko.hevery.com/code-reviewers-guide/&lt;/a&gt;  &lt;br /&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://ccnyou.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://ccnyou.github.io/" rel="alternate" type="text/html" /><updated>2017-01-11T22:46:31+08:00</updated><id>http://ccnyou.github.io/</id><title>ccnyou's blog</title><subtitle>ccnyou's blog</subtitle><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><entry><title>【翻译】编写可测试代码的艺术</title><link href="http://ccnyou.github.io/07/" rel="alternate" type="text/html" title="【翻译】编写可测试代码的艺术" /><published>2017-01-11T00:00:00+08:00</published><updated>2017-01-11T00:00:00+08:00</updated><id>http://ccnyou.github.io/07</id><content type="html" xml:base="http://ccnyou.github.io/07/">&lt;p&gt;原文：&lt;a href=&quot;http://misko.hevery.com/code-reviewers-guide/&quot;&gt;http://misko.hevery.com/code-reviewers-guide/&lt;/a&gt;  &lt;br /&gt;
 按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com
 还在持续翻译中，先发整体框架上来…&lt;/p&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;缺陷一：构造函数做太多工作&lt;/h2&gt;
-&lt;p&gt;### 警告标志：&lt;br /&gt;
-* 构造函数中或者在字段声明处出现 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 关键字。
-* 构造函数中或者在字段声明处出现静态函数调用。
-* 在构造函数中做任何字段赋值的事情。
-* 在构造函数之后对象没有完全初始化(注意&lt;code class=&quot;highlighter-rouge&quot;&gt;initialize&lt;/code&gt;方法)。
-* 在构造函数中出现控制流(条件、循环逻辑)。
-* 用代码做复杂的对象图构造而不是工厂模式或者构造器。
-* 添加或者使用初始化块。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;缺陷二：挖掘合作者&lt;/h2&gt;
-&lt;p&gt;### 警告标志： 
-* 对象被传递进去但是不直接使用(只是为了用来访问其他对象)
-* 违反Demeter法则：方法调用链用点（.）来遍历对象图。
-* 可疑的命名：&lt;code class=&quot;highlighter-rouge&quot;&gt;context, environment, principal, container, manager&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&quot;section-1&quot;&gt;警告标志：&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;构造函数中或者在字段声明处出现 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 关键字。&lt;/li&gt;
+  &lt;li&gt;构造函数中或者在字段声明处出现静态函数调用。&lt;/li&gt;
+  &lt;li&gt;在构造函数中做任何字段赋值的事情。&lt;/li&gt;
+  &lt;li&gt;在构造函数之后对象没有完全初始化(注意&lt;code class=&quot;highlighter-rouge&quot;&gt;initialize&lt;/code&gt;方法)。&lt;/li&gt;
+  &lt;li&gt;在构造函数中出现控制流(条件、循环逻辑)。&lt;/li&gt;
+  &lt;li&gt;用代码做复杂的对象图构造而不是工厂模式或者构造器。&lt;/li&gt;
+  &lt;li&gt;添加或者使用初始化块。&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;缺陷三：脆弱的全局状态和单例&lt;/h2&gt;
-&lt;p&gt;### 警告标志： 
-* 添加或者使用单例。
-* 添加或者使用静态字段或者静态函数。
-* 添加或者使用静态初始化块。
-* 添加或者使用注册机制。
-* 添加或者使用服务定位器。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;缺陷二：挖掘合作者&lt;/h2&gt;
 
-&lt;h2 id=&quot;section-3&quot;&gt;缺陷四：类做太多事情&lt;/h2&gt;
-&lt;p&gt;### 警告标志： 
-* 类功能总结起来包含“和”字。
-* 类很难让团队新成员阅读快速理解。
-* 类包含部分字段只在部分方法中用到。
-* 类包含只操作参数的静态方法&lt;/p&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：http://misko.hevery.com/code-reviewers-guide/  
+&lt;h3 id=&quot;section-3&quot;&gt;警告标志：&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;对象被传递进去但是不直接使用(只是为了用来访问其他对象)&lt;/li&gt;
+  &lt;li&gt;违反Demeter法则：方法调用链用点（.）来遍历对象图。&lt;/li&gt;
+  &lt;li&gt;可疑的命名：&lt;code class=&quot;highlighter-rouge&quot;&gt;context, environment, principal, container, manager&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;缺陷三：脆弱的全局状态和单例&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;警告标志：&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;添加或者使用单例。&lt;/li&gt;
+  &lt;li&gt;添加或者使用静态字段或者静态函数。&lt;/li&gt;
+  &lt;li&gt;添加或者使用静态初始化块。&lt;/li&gt;
+  &lt;li&gt;添加或者使用注册机制。&lt;/li&gt;
+  &lt;li&gt;添加或者使用服务定位器。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-6&quot;&gt;缺陷四：类做太多事情&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-7&quot;&gt;警告标志：&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;类功能总结起来包含“和”字。&lt;/li&gt;
+  &lt;li&gt;类很难让团队新成员阅读快速理解。&lt;/li&gt;
+  &lt;li&gt;类包含部分字段只在部分方法中用到。&lt;/li&gt;
+  &lt;li&gt;类包含只操作参数的静态方法&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>ccnyou</name><email>ccnyou@qq.com</email></author><summary>原文：http://misko.hevery.com/code-reviewers-guide/  
 按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com
 还在持续翻译中，先发整体框架上来…
 
 缺陷一：构造函数做太多工作
-### 警告标志：
-* 构造函数中或者在字段声明处出现 new 关键字。
-* 构造函数中或者在字段声明处出现静态函数调用。
-* 在构造函数中做任何字段赋值的事情。
-* 在构造函数之后对象没有完全初始化(注意initialize方法)。
-* 在构造函数中出现控制流(条件、循环逻辑)。
-* 用代码做复杂的对象图构造而不是工厂模式或者构造器。
-* 添加或者使用初始化块。
+
+警告标志：
+
+  构造函数中或者在字段声明处出现 new 关键字。
+  构造函数中或者在字段声明处出现静态函数调用。
+  在构造函数中做任何字段赋值的事情。
+  在构造函数之后对象没有完全初始化(注意initialize方法)。
+  在构造函数中出现控制流(条件、循环逻辑)。
+  用代码做复杂的对象图构造而不是工厂模式或者构造器。
+  添加或者使用初始化块。
+
 
 缺陷二：挖掘合作者
-### 警告标志： 
-* 对象被传递进去但是不直接使用(只是为了用来访问其他对象)
-* 违反Demeter法则：方法调用链用点（.）来遍历对象图。
-* 可疑的命名：context, environment, principal, container, manager。
+
+警告标志：
+
+  对象被传递进去但是不直接使用(只是为了用来访问其他对象)
+  违反Demeter法则：方法调用链用点（.）来遍历对象图。
+  可疑的命名：context, environment, principal, container, manager。
+
 
 缺陷三：脆弱的全局状态和单例
-### 警告标志： 
-* 添加或者使用单例。
-* 添加或者使用静态字段或者静态函数。
-* 添加或者使用静态初始化块。
-* 添加或者使用注册机制。
-* 添加或者使用服务定位器。
+
+警告标志：
+
+  添加或者使用单例。
+  添加或者使用静态字段或者静态函数。
+  添加或者使用静态初始化块。
+  添加或者使用注册机制。
+  添加或者使用服务定位器。
+
 
 缺陷四：类做太多事情
-### 警告标志： 
-* 类功能总结起来包含“和”字。
-* 类很难让团队新成员阅读快速理解。
-* 类包含部分字段只在部分方法中用到。
-* 类包含只操作参数的静态方法</summary></entry><entry><title>【翻译】Objective-C开发中，哪些模块值得写单元测试？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：&lt;a href=&quot;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&quot;&gt;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&lt;/a&gt;  &lt;br /&gt;
+
+警告标志：
+
+  类功能总结起来包含“和”字。
+  类很难让团队新成员阅读快速理解。
+  类包含部分字段只在部分方法中用到。
+  类包含只操作参数的静态方法</summary></entry><entry><title>【翻译】Objective-C开发中，哪些模块值得写单元测试？</title><link href="http://ccnyou.github.io/06/" rel="alternate" type="text/html" title="【翻译】Objective-C开发中，哪些模块值得写单元测试？" /><published>2017-01-07T00:00:00+08:00</published><updated>2017-01-07T00:00:00+08:00</updated><id>http://ccnyou.github.io/06</id><content type="html" xml:base="http://ccnyou.github.io/06/">&lt;p&gt;原文：&lt;a href=&quot;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&quot;&gt;https://ashfurrow.com/blog/whats-worth-unit-testing-in-objective-c/&lt;/a&gt;  &lt;br /&gt;
 按个人理解翻译，有哪里理解不对通过邮箱给我留意见: ccnyou@qq.com&lt;/p&gt;
 
 &lt;p&gt;哪些模块值得写单元测试？这是一个值得讨论的问题。&lt;/p&gt;
