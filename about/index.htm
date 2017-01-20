@@ -1,6 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-  
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>陈聪宁的个人简历</title>
     <link href="./res/all.css" type="text/css" rel="stylesheet">
@@ -136,7 +134,21 @@
               <tr>
                 <td class="tdname" valign="top">2014.11~至今
                   <br>IEG-助手项目组</td>
-                <td class="pt12">2014年过来主要负责神之浩劫(Smite) iOS 客户端研发，后因为团队方向调整，从2015年初开始负责腾讯游戏助手iOS客户端开发。 个人负责搭建App框架，编写持续集成构建脚本，APNS推送模块，米大师支付模块，搭建Js-Native调用规范，JS支付接口及其单元测试，王者荣耀助手等专版的打包管理，个人主页整合改版，数据库模块的升级、修复、优化，IPv6适配工作。</td></tr>
+                <td class="pt12">* 2014年过来主要负责神之浩劫(Smite) iOS 客户端研发，后因为团队方向调整，项目暂停，转做腾讯游戏助手项目。 <br>
+                    * 2015年初开始负责腾讯游戏助手iOS客户端开发。 刚开始iOS项目只有我一个人，负责第一个版本的代码编写，主要工作如下：<br>
+                    * 使用AFNetworking，Masonry，FMDB等开源库搭建App的网络，UI，数据库框架。<br>
+                    * 使用OCMockito，OCHamcrest搭建App单元测试框架，用空闲时间逐步给项目覆盖单元测试，同时写了一套可以本地自动提取当天svn记录跑单元测试的Python脚本。 <br>
+                    * 使用Python/Bash脚本编写持续集成构建脚本，同时完善流程脚本工具包括自动更新版本号，自动读取项目配置修改为有意义包名。 <br>
+                    * 基于开源WebViewJsBridge修改编写一套UIWebView-JS交互工具，支持对象注入，js闭包调用传参，Js注入Ready事件分发。(Code平台获奖组件开发同事有参考)<br>
+                    * 基于多Target配置王者荣耀等专版（共8个）支持，实现一套代码通过不同配置可以同时支持多款游戏业务 <br>
+                    * 使用UIGestureRecognizer重构个人主页，实现多手势连续控制，并且抽象个人中心模块，后续新增业务个人主页只需要实现少量几个函数。<br>
+                    * 基于SQL脚本的数据库升级优化和修复工作，优化主要是根据实际查询建索引，读写分离的实现。修复主要是升级脚本出现问题根据用户表的错误情况执行对应的修复逻辑。<br>
+                    * IPv6的适配工作，在公司不提供IPv6环境下自己使用iPhone(4G) + iMac搭建IPv6环境，完成整一套的适配工作。<br>
+                    * 手游账号体系改版，主要是微信账号的接入支持，刚开始App设计只支持端游，接入王者之后从存储逻辑到UI界面都需要做对应的修改。<br>
+                    * JS支付接口的开发及其单元测试覆盖。主要是天刀游戏模式需要调起Native米大师支付，个人负责米大师的接入联调，支付接口的实现，单元测试逻辑全覆盖，正式发布之后到目前没有遇到过问题。<br>
+                    * 项目的Profile以及优化工作，通过Instruments工具找出项目中卡顿点和内存泄漏问题并解决。并将优化的经验整理成文档进行内部分享。<br>
+                    * 参与了部分面试工作，同时已经在着手项目中一些模块和流程的文档整理工作，方便新同事入职快速上手项目。<br>
+                </td></tr>
               <tr>
                 <td>&nbsp;</td></tr>
               <tr>
@@ -201,6 +213,6 @@
         </div>
       </div>
     </div>
-  </body>
+  
 
-</html>
+</body></html>
