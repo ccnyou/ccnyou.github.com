@@ -13,6 +13,22 @@
 					<key>url</key>
 					<string>http://yoyo.qq.com/ipa/SMOBA_1.3.2.1229_build12_ios_release_0_20001.ipa</string>
 				</dict>
+				<dict>
+					<key>kind</key>
+					<string>display-image</string>
+					<key>needs-shine</key>
+					<true/>
+					<key>url</key>
+					<string>http://down.qq.com/qqtalk/lolApp/icon/lol_icon.png</string>
+				</dict>
+				<dict>
+					<key>kind</key>
+					<string>full-size-image</string>
+					<key>needs-shine</key>
+					<true/>
+					<key>url</key>
+					<string>http://down.qq.com/qqtalk/lolApp/icon/lol_icon.png</string>
+				</dict>
 			</array>
 			<key>metadata</key>
 			<dict>
