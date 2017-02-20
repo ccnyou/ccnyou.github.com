@@ -33,7 +33,7 @@
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.tencent.smobagamehelper</string>
+				<string>com.tencent.smobagamehelper.gray</string>
 				<key>bundle-version</key>
 				<string>1.3.2</string>
 				<key>kind</key>
