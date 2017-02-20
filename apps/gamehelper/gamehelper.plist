@@ -11,21 +11,21 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http://ccnyou.github.io/apps/gamehelper/gamehelper.ipa</string>
+					<string>http://yoyo.qq.com/ipa/SMOBA_1.3.2.1229_build12_ios_release_0_20001.ipa</string>
 				</dict>
 			</array>
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.tencent.gamehelper</string>
+				<string>com.tencent.smobagamehelper</string>
 				<key>bundle-version</key>
-				<string>0.7.0</string>
+				<string>1.3.2</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>subtitle</key>
-				<string>腾讯游戏助手</string>
+				<string>王者荣耀助手</string>
 				<key>title</key>
-				<string>腾讯游戏助手</string>
+				<string>王者荣耀助手</string>
 			</dict>
 		</dict>
 	</array>
