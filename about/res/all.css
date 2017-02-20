@@ -565,6 +565,7 @@ body #header .m{
 .pt12{
 	padding-top: 5px;
     vertical-align: top;
+    line-height: 25px;
 }
 .tip{
 	display:none;
