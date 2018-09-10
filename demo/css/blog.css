@@ -1,0 +1,74 @@
+body, button, input, select, textarea {
+    font: 12px/1.5 tahoma,arial,\5b8b\4f53;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+.donate-detail-content {
+    width: 748px;
+    margin-left: 196px;
+    box-sizing: content-box;
+}
+
+.donate-detail-content ul {
+    list-style: none;
+    border-left: 2px solid #e6e6e6;
+    margin-left: 22px;
+    padding: 24px 0 24px 21px;
+    overflow: visible;
+}
+
+.donate-detail-content li {
+    list-style: none;
+    background-color: #f0f4f7;
+    position: relative;
+    border-color: #eff5f5;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border: 1px solid #faf8f4;
+}
+
+.donate-detail-content li .listIcon {
+    position: absolute;
+    top: 14px;
+    left: -28px;
+    _left: -48px;
+    display: inline-block;
+    height: 14px;
+    width: 30px;
+    background: url(https://i.alipayobjects.com/e/201304/2We30Is5Zk.png) no-repeat 0 0;
+}
+
+.donate-detail-content p {
+    font-size: 14px;
+    color: #666;
+    padding-bottom: 12px;
+}
+
+.donate-detail-img-small img {
+    border: 1px solid #e0e0e0;
+    margin-right: 16px;
+    box-sizing: content-box;
+    margin-top: 4px;
+}
+
+.donate-detail-toggleImage-wrapper{
+    text-align: right;
+}
+
+.donate-detail-toggleImage {
+    background: url(https://i.alipayobjects.com/e/201304/8Q2VdG1mR.png) no-repeat -35px -586px;
+    padding-right: 15px;
+    display: inline-block;
+    width: 63px;
+    height: 16px;
+    overflow: hidden;
+    color: #0188cc;
+}
+
+.donate-detail-toggleImage-wrapper .expanded {
+    background: url(https://i.alipayobjects.com/e/201304/8Q2VdG1mR.png) no-repeat 54px -586px;
+}
