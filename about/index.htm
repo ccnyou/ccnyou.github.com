@@ -71,7 +71,7 @@
                   <td class="tdname">姓名：</td>
                   <td colspan="2">陈聪宁</td>
                   <td rowspan="4" class="textc">
-                    <img class="zoomin" onclick="showBigImg(this);" src="./res/head.jpg" height="150"></td>
+                    <img class="zoomin" onclick="showBigImg(this);" src="./res/avatar.jpg" height="150"></td>
                 </tr>
                 <tr>
                   <td class="tdname">身份证号码：</td>
@@ -87,12 +87,6 @@
                   <td>男</td>
                   <td class="tdname">出生日期：</td>
                   <td>1992-08-04</td></tr>
-                <tr>
-                  <td class="tdname">紧急联系人：</td>
-                  <td>陈先金（大哥）</td>
-                  <td class="tdname">紧急联系人电话：</td>
-                  <td>13560075934</td></tr>
-                <tr>
                   <td class="tdname">Github：</td>
                   <td>https://github.com/ccnyou</td>
                   <td class="tdname">博客：</td>
@@ -132,33 +126,48 @@
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
-                <td class="tdname" valign="top">2014.11~至今
-                  <br>IEG-助手项目组</td>
+                <td class="tdname" valign="top">2018.9~至今
+                  <br>平行互联网</td>
                 <td class="pt12">
-                    2014年过来主要负责神之浩劫(Smite) iOS 客户端研发，2015年初开始负责腾讯游戏助手iOS客户端开发。主要工作如下：<br>
-                    * 使用AFNetworking，Masonry，FMDB等开源库搭建App的网络，UI，数据库框架。<br>
-                    * 使用OCMockito，OCHamcrest搭建App单元测试框架，用空闲时间逐步给项目覆盖单元测试，同时写了一套可以本地自动提取当天svn记录跑单元测试的Python脚本。 <br>
-                    * 基于开源WebViewJsBridge修改编写一套UIWebView-JS交互工具，支持对象注入，js闭包调用传参，Js注入Ready事件分发。(Code平台获奖组件开发同事有参考)<br>
-                    * 基于SQL脚本的数据库升级和修复工作。有部分版本在升级过程产生一些错误，修复主要是升级脚本出现问题根据用户表的错误情况执行对应的修复逻辑。<br>
-                    * JS支付接口的开发及其单元测试覆盖。主要是天刀游戏模式需要调起Native米大师支付，个人负责米大师的接入联调，支付接口的实现，单元测试逻辑全覆盖，正式发布之后到目前没有遇到过问题。<br>
-                    * IPv6的适配工作，在公司不提供IPv6环境下自己使用iPhone(4G) + iMac搭建IPv6环境，完成整一套的适配工作。<br>
-                    * JSPatch 接入工作和单元测试覆盖，另外根据JSPatch文档修改JSPatchConverter函数名转换bug，并给他们提 PullRequest，现在已经被接收(Merged)。 <br>
-                    * iOS 越狱用户灰度发布计划的制定。整理了越狱手机灰度的实现方案、流程、优缺点和项目管理评估，目前版本已具备灰度运营功能，解决之前更新版本需要全量更新问题。 <br>
-                    * 参与了部分面试工作，同时已经在着手项目中一些模块和流程的文档整理工作，方便新同事入职快速上手项目。<br>
-                    * 项目的Profile以及优化工作，通过Instruments工具找出项目中卡顿点和内存泄漏问题并解决。聊天功能上线后经常有用户反馈用久了卡顿、大量消息时候卡顿，优化工作主要从以下几个方面入手：<br>
-                    &nbsp;&nbsp; (1) 根据查询需求做了数据库查询索引，实现百万条数据毫秒级别完成查询。同时在调试环境插入了查询超时检测功能，能够在新增功能的时候检测是否有新的索引需求<br>
-                    &nbsp;&nbsp; (2) 双操作队列实现数据库读写，读操作使用读队列，不会因为太多写请求导致堆积读请求，使得大量消息时候也不影响界面的及时刷新。<br>
-                    &nbsp;&nbsp; (3) 分离优化内部数据分发流程减少数据库读取，针对频繁访问部分的数据缓存，大幅度减少数据库查询需求。<br>
-                    &nbsp;&nbsp; (4) 内存泄漏的分析与检测，主要是一些循环引用，第三方组件的泄漏，优化完成之后，在洪水消息情况下，内存占用稳定在 60M。同时在项目公共基类插入日志和编写日志分析脚本，可以通过分析alloc和dealloc匹配检测内存泄漏情况。 <br>
+                    2018年底从腾讯离职进来平行互联网。主要工作如下：<br>
+                    * 负责区块链溯源系统、区块链慈善系统产品的开发、迭代、维护。<br>
                 </td></tr>
+              <tr>
+              <tr>
+                <td class="tdname" valign="top">2017.4~2018.9
+                  <br>腾讯SNG-手Q基础产品部</td>
+                <td class="pt12">
+                    2017年初转岗到SNG-手Q基础产品部。主要工作如下：<br>
+                    * 负责手Q登录模块的迭代和维护。<br>
+                    * 负责手Q讨论组的性能优化和日常维护。 <br>
+                    * 负责校园圈的开发和维护。<br>
+                    * 负责QQ实名制的开发和维护。<br>
+                    * 参与王者荣耀好友推荐需求开发。 <br>
+                    * 参与DOV评论模块的开发。<br>
+                    * 参与腾讯文档收集表项目研发。<br>
+                    * 自我学习区块链相关的技术和开发知识<br>
+                </td></tr>
+              <tr>
+                <td class="tdname" valign="top">2014.11~2017.3
+                  <br>腾讯IEG-助手项目组</td>
+                <td class="pt12">
+                    2014年入职腾讯，主要负责神之浩劫(Smite) iOS 客户端研发，2015年初开始负责腾讯游戏助手iOS客户端开发。主要工作如下：<br>
+                    * 负责App的网络，UI，数据库等基础架构的搭建。<br>
+                    * 负责WebView-JS模块研发、迭代和维护。<br>
+                    * 负责JS支付接口的开发及其单元测试覆盖。<br>
+                    * 负责IPv6的改造适配工作。<br>
+                    * 负责调研和接入JSPatch，曾参与JSPatch Github项目的的bug fix。<br>
+                    * 负责调研和制定 iOS 越狱用户灰度测试的方案。 <br>
+                  </td></tr>
+              <tr>
+                <td>&nbsp;</td></tr>
               <tr>
                 <td>&nbsp;</td></tr>
               <tr>
                 <td class="tdname" valign="top">2014.06~2014.09<br>
                     珠海猎豹移动</td>
-                <td class="pt12">* 参加实习生训练营，并且在训练营小组项目带领小团队获得第一名。
-                  <br>* 训练项目中用到很多自己自己大学实现的模块，包括读写锁、GCD for C++、高性能列表控件， 以及第三方的 crash dump 工具，优化过程中实现了一个可重用内存池，项目从设计、分工、编码、调试优化到完工都没有遇到大问题， 期间也多次协助其他小伙伴分析crash dump。(PS.后续公司同事一起 review 我们小组代码，说:"这小伙子是写iOS的吧？")
-                  <br>* 之后在手机助手连接组参与封闭研发。负责了USB调试引导界面的一个灰度版本的开发。
+                <td class="pt12">* 作为训练营项目的小组长，借助大学积累的可重用组件（读写锁、CrashReporter等），带领小团队顺利完成项目并获得评比第一名。
+                  <br>* 参与手机助手连接组封闭研发。负责了USB调试引导界面的一个灰度版本的开发。
                   <br>* 实习期间学习了包括：C++开发规范，SVN项目管理，App灰度发布相关流程等项目技能。</td></tr>
               <tr>
                 <td>&nbsp;</td></tr>
@@ -196,7 +205,9 @@
                   <td class="tdname" valign="top">获奖证书：</td>
                   <td class="pt12">2012年广东外语外贸大学思科杯网络创意大赛二等奖
                     <br>2014猎豹移动暑期实训项目最佳项目奖
-                    <br>2015腾讯互动娱乐运营部优秀新人奖</td></tr>
+                    <br>2015腾讯互动娱乐运营部优秀新人奖
+                    <br>2016腾讯互动娱乐运营部考核4星
+                    <br>2017、2018腾讯手Q基础产品部质量之星(2届)</td></tr>
               </tbody>
             </table>
           </div>
